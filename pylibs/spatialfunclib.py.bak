@@ -136,14 +136,14 @@ def intersection_point(a_lat, a_lon, a_bearing, b_lat, b_lon, b_bearing, debug=F
     dist12 = 2.0 * math.asin(math.sqrt(math.sin(dLat/2.0) * math.sin(dLat/2.0) + math.cos(a_lat) * math.cos(b_lat) * math.sin(dLon/2.0) * math.sin(dLon/2.0)))
     
     if (dist12 == 0.0):
-        if (debug): print("Intersection ERROR: points are too close!")
+        if (debug): print "Intersection ERROR: points are too close!"
         return None
     
     # initial/final bearings between points
     try:
         brngA = math.acos((math.sin(b_lat) - math.sin(a_lat) * math.cos(dist12)) / (math.sin(dist12) * math.cos(a_lat)))
     except Exception as inst:
-        if (debug): print("Intersection EXCEPTION: " + str(inst))
+        if (debug): print "Intersection EXCEPTION: " + str(inst)
         return None
     
     # protect against rounding
@@ -153,7 +153,7 @@ def intersection_point(a_lat, a_lon, a_bearing, b_lat, b_lon, b_bearing, debug=F
     try:
         brngB = math.acos((math.sin(a_lat) - math.sin(b_lat) * math.cos(dist12)) / (math.sin(dist12) * math.cos(b_lat)))
     except Exception as inst:
-        if (debug): print("Intersection EXCEPTION: " + str(inst))
+        if (debug): print "Intersection EXCEPTION: " + str(inst)
         return None
     
     if (math.sin(b_lon - a_lon) > 0):
@@ -168,12 +168,12 @@ def intersection_point(a_lat, a_lon, a_bearing, b_lat, b_lon, b_bearing, debug=F
     
     # infinite intersections
     if ((math.sin(alpha1) == 0.0) and (math.sin(alpha2) == 0.0)):
-        if (debug): print("Intersection ERROR: infinite intersections!")
+        if (debug): print "Intersection ERROR: infinite intersections!"
         return None
     
     # ambiguous intersection
     if ((math.sin(alpha1) * math.sin(alpha2)) < 0.0):
-        if (debug): print("Intersection ERROR: ambiguous intersection!")
+        if (debug): print "Intersection ERROR: ambiguous intersection!"
         return None
     
     alpha3 = math.acos (-1.0 * math.cos(alpha1) * math.cos(alpha2) + math.sin(alpha1) * math.sin(alpha2) * math.cos(dist12))
@@ -200,36 +200,36 @@ def point_along_line(a_lat, a_lon, b_lat, b_lon, fraction_along):
 #
 def projection_onto_line(a_lat, a_lon, b_lat, b_lon, c_lat, c_lon, debug=False):
     ab_angle = path_bearing(a_lat, a_lon, b_lat, b_lon)
-    if (debug): print("ab_angle: " + str(ab_angle) + " degrees")
+    if (debug): print "ab_angle: " + str(ab_angle) + " degrees"
     
     ac_angle = path_bearing(a_lat, a_lon, c_lat, c_lon)
-    if (debug): print("ac_angle: " + str(ac_angle) + " degrees")
+    if (debug): print "ac_angle: " + str(ac_angle) + " degrees"
     
     ab_length = distance(a_lat, a_lon, b_lat, b_lon)
-    if (debug): print("ab_length: " + str(ab_length) + " meters")
+    if (debug): print "ab_length: " + str(ab_length) + " meters"
     
     ac_length = distance(a_lat, a_lon, c_lat, c_lon)
-    if (debug): print("ac_length: " + str(ac_length) + " meters")
+    if (debug): print "ac_length: " + str(ac_length) + " meters"
     
     angle_diff = (ac_angle - ab_angle)
-    if (debug): print("angle_diff: " + str(angle_diff) + " degrees")
+    if (debug): print "angle_diff: " + str(angle_diff) + " degrees"
     
     meters_along = (ac_length * math.cos(math.radians(angle_diff)))
-    if (debug): print("meters_along: " + str(meters_along) + " meters")
+    if (debug): print "meters_along: " + str(meters_along) + " meters"
     
     if (ab_length == 0.0):
         fraction_along = 0.0
     else:
         fraction_along = (meters_along / ab_length)
-    if (debug): print("fraction_along: " + str(fraction_along))
+    if (debug): print "fraction_along: " + str(fraction_along)
     
     projected_point = point_along_line(a_lat, a_lon, b_lat, b_lon, fraction_along)
-    if (debug): print("projected_point: " + str(projected_point))
+    if (debug): print "projected_point: " + str(projected_point)
     
     cproj_length = distance(c_lat, c_lon, projected_point[0], projected_point[1])
-    if (debug): print("cproj_length: " + str(cproj_length) + " meters")
+    if (debug): print "cproj_length: " + str(cproj_length) + " meters"
     
     cproj_angle = path_bearing(c_lat, c_lon, projected_point[0], projected_point[1])
-    if (debug): print("cproj_angle: " + str(cproj_angle) + " degrees")
+    if (debug): print "cproj_angle: " + str(cproj_angle) + " degrees"
     
     return (projected_point, fraction_along, cproj_length)
