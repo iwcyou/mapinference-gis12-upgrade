@@ -3,7 +3,7 @@ import cv2 as cv
 import sys
 from location import TripLoader
 from pylibs import spatialfunclib
-from itertools import tee
+from itertools import tee, izip
 
 ##
 ## important parameters
@@ -17,7 +17,7 @@ def pairwise(iterable):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
     a, b = tee(iterable)
     next(b, None)
-    return zip(a, b)
+    return izip(a, b)
 
 class KDE:
     def __init__(self):
@@ -25,9 +25,9 @@ class KDE:
     
     def create_kde_with_trips(self, all_trips):
         
-        print("trips path: " + str(trips_path))
-        print("cell size: " + str(cell_size))
-        print("gaussian blur: " + str(gaussian_blur))
+        print "trips path: " + str(trips_path)
+        print "cell size: " + str(cell_size)
+        print "gaussian blur: " + str(gaussian_blur)
         
         # flag to save images
         save_images = True
@@ -54,7 +54,7 @@ class KDE:
                 if (location.longitude > max_lon):
                     max_lon = location.longitude
         
-        print("done.")
+        print "done."
         
         # find bounding box for data
         min_lat -= 0.003
@@ -116,7 +116,7 @@ class KDE:
         #cv.SetZero(lines)
         lines = np.zeros((height,width), dtype='uint8')
         
-        print("done.")
+        print "done."
         
         trip_counter = 1
         
@@ -137,7 +137,7 @@ class KDE:
         # save the lines
         cv.imwrite("raw_data.png", lines)
         
-        print("done.")
+        print "done."
         #print "Intensity map acquired."
         sys.stdout.write("Smoothing... ")
         sys.stdout.flush()
@@ -147,8 +147,8 @@ class KDE:
         # themap = cv.GaussianBlur(themap, (gaussian_blur, gaussian_blur))
         # cv.imwrite("kde.png", themap)
         # sys.stdout.flush()
-        print("done.")
-        print("\nKDE generation complete.")
+        print "done."
+        print "\nKDE generation complete."
 
 if __name__ == '__main__':
     
