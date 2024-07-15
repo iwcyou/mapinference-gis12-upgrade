@@ -1,8 +1,9 @@
 Authors: James Biagioni (jbiagi1@uic.edu) and Jakob Eriksson (jakob@uic.edu)
 Date: 11/7/2012
 
-Comments:
----------
+# dataset describe:
+`trips/trips_1m/<file_name>` the data column0: id; column1: lat; column2: lon; column3: time.
+# Comments:
 To re-produce the output from our paper, "Map Inference in the Face of Noise and Disparity" (published in ACM SIGSPATIAL GIS 2012), please execute the following steps:
 
 1) Create KDE (kde.png) from trips
