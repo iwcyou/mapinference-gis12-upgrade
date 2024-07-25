@@ -4,6 +4,7 @@ import sys
 from location import TripLoader
 from pylibs import spatialfunclib
 from itertools import tee
+import os
 
 ##
 ## important parameters
@@ -12,7 +13,7 @@ from itertools import tee
 cell_size = 1 # meters
 gaussian_blur = 17
 # trips_path = "trips/trips_1m/"
-trips_path = "datasets/trips_0_24/"
+trips_path = "datasets/trips_0_24_new/"
 
 def pairwise(iterable):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
@@ -137,6 +138,7 @@ class KDE:
 
         # save the lines
         cv.imwrite("raw_data.png", lines)
+        # cv.imwrite(f"rendered_0_24/raw_data_{FILE_NAME}.png", lines)
 
         print("done.")
         #print "Intensity map acquired."
@@ -165,5 +167,10 @@ if __name__ == '__main__':
     #         print "Usage: kde.py [-c <cell_size>] [-b <gaussian_blur_size>] [-p <trips_path>] [-h]\n"
     #         sys.exit()
 
+    # for file_name in os.listdir(trips_path):
+    #     FILE_NAME = [file_name]
+
+        # k = KDE()
+        # k.create_kde_with_trips(TripLoader.load_all_trips(FILE_NAME))
     k = KDE()
     k.create_kde_with_trips(TripLoader.load_all_trips(trips_path))
